@@ -5,12 +5,12 @@ on:
     branches: [ "main" ]
 
 env:
-  AWS_REGION: eu-west-3                 # Région AWS (Paris)
-  ECR_REPOSITORY: kamilakare/mlops      # Nom de ton répertoire ECR
-  ECS_SERVICE: mlops_service            # Nom de ton service ECS
-  ECS_CLUSTER: MlopsCluster             # Nom de ton cluster ECS
-  ECS_TASK_DEFINITION: mlops_catboost   # Famille de ta Task Definition
-  CONTAINER_NAME: mlops_catboost        # Nom du conteneur dans la Task Definition
+  AWS_REGION: eu-west-3                 # Région Paris
+  ECR_REPOSITORY: ibrahima/mlops        # <-- CHANGÉ ICI
+  ECS_SERVICE: mlops_service            
+  ECS_CLUSTER: MlopsCluster             
+  ECS_TASK_DEFINITION: mlops_catboost   
+  CONTAINER_NAME: mlops_catboost        
 
 permissions:
   contents: read
@@ -42,7 +42,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        # On indique ici le dossier 'pipeline/.' pour trouver le Dockerfile
+        # On pointe vers le dossier pipeline/ où se trouve ton Dockerfile
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG pipeline/.
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
