@@ -5,12 +5,12 @@ on:
     branches: [ "main" ]
 
 env:
-  AWS_REGION: eu-west-3                 # Région Paris
-  ECR_REPOSITORY: ibrahima/mlops        # Ton dépôt ECR créé sur AWS
-  ECS_SERVICE: mlops_service            # Nom du service à créer sur ECS
-  ECS_CLUSTER: MlopsCluster             # Nom du cluster à créer sur ECS
-  ECS_TASK_DEFINITION: mlops_catboost   # Nom de la Task Definition sur AWS
-  CONTAINER_NAME: mlops_catboost        # Nom du conteneur dans la Task Definition
+  AWS_REGION: eu-west-1                 # Changé ici pour correspondre à ta console (Irlande)
+  ECR_REPOSITORY: ibrahima/mlops        # Ton dépôt visible sur ta capture d'écran
+  ECS_SERVICE: mlops_service            
+  ECS_CLUSTER: MlopsCluster             
+  ECS_TASK_DEFINITION: mlops_catboost   
+  CONTAINER_NAME: mlops_catboost        
 
 permissions:
   contents: read
@@ -30,7 +30,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
+        aws-region: eu-west-1           # Changé ici aussi pour l'Irlande
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -42,7 +42,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        # Build l'image à partir du dossier pipeline
+        # Build à partir du dossier pipeline/
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG pipeline/.
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
