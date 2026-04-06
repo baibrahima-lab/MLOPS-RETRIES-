@@ -7,7 +7,7 @@ on:
 env:
   AWS_REGION: eu-west-3                 # Changé ici pour correspondre à ta console (Paris)
   ECR_REPOSITORY: ibrahima/mlops        # Ton dépôt visible sur ta capture d'écran
-  ECS_SERVICE: mlops_service            
+  ECS_SERVICE: mlops-service            
   ECS_CLUSTER: MlopsCluster             
   ECS_TASK_DEFINITION: mlops_catboost   
   CONTAINER_NAME: mlops_catboost        
